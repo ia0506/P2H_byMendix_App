@@ -28,25 +28,31 @@ import java.util.List;
 
 public class SendEmail extends CustomJavaAction<java.lang.Boolean>
 {
-	private IMendixObject __EmailAccount;
-	private email_connector.proxies.EmailAccount EmailAccount;
-	private IMendixObject __EmailMessage;
-	private email_connector.proxies.EmailMessage EmailMessage;
+	/** @deprecated use EmailAccount.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __EmailAccount;
+	private final email_connector.proxies.EmailAccount EmailAccount;
+	/** @deprecated use EmailMessage.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __EmailMessage;
+	private final email_connector.proxies.EmailMessage EmailMessage;
 
-	public SendEmail(IContext context, IMendixObject EmailAccount, IMendixObject EmailMessage)
+	public SendEmail(
+		IContext context,
+		IMendixObject _emailAccount,
+		IMendixObject _emailMessage
+	)
 	{
 		super(context);
-		this.__EmailAccount = EmailAccount;
-		this.__EmailMessage = EmailMessage;
+		this.__EmailAccount = _emailAccount;
+		this.EmailAccount = _emailAccount == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), _emailAccount);
+		this.__EmailMessage = _emailMessage;
+		this.EmailMessage = _emailMessage == null ? null : email_connector.proxies.EmailMessage.initialize(getContext(), _emailMessage);
 	}
 
 	@java.lang.Override
 	public java.lang.Boolean executeAction() throws Exception
 	{
-		this.EmailAccount = this.__EmailAccount == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), __EmailAccount);
-
-		this.EmailMessage = this.__EmailMessage == null ? null : email_connector.proxies.EmailMessage.initialize(getContext(), __EmailMessage);
-
 		// BEGIN USER CODE
 		if (this.EmailAccount == null)
 			throw new EmailConnectorException(Error.EMPTY_EMAIL_ACCOUNT.getMessage());

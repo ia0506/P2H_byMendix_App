@@ -15,12 +15,15 @@ import com.mendix.webui.CustomJavaAction;
 
 public class GetMendixID extends CustomJavaAction<java.lang.Long>
 {
-	private IMendixObject mxObject;
+	private final IMendixObject mxObject;
 
-	public GetMendixID(IContext context, IMendixObject mxObject)
+	public GetMendixID(
+		IContext context,
+		IMendixObject _mxObject
+	)
 	{
 		super(context);
-		this.mxObject = mxObject;
+		this.mxObject = _mxObject;
 	}
 
 	@java.lang.Override

@@ -28,20 +28,24 @@ import static email_connector.implementation.Commons.getProtocol;
 
 public class CheckServerConnection extends CustomJavaAction<java.lang.Void>
 {
-	private IMendixObject __EmailAccount;
-	private email_connector.proxies.EmailAccount EmailAccount;
+	/** @deprecated use EmailAccount.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __EmailAccount;
+	private final email_connector.proxies.EmailAccount EmailAccount;
 
-	public CheckServerConnection(IContext context, IMendixObject EmailAccount)
+	public CheckServerConnection(
+		IContext context,
+		IMendixObject _emailAccount
+	)
 	{
 		super(context);
-		this.__EmailAccount = EmailAccount;
+		this.__EmailAccount = _emailAccount;
+		this.EmailAccount = _emailAccount == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), _emailAccount);
 	}
 
 	@java.lang.Override
 	public java.lang.Void executeAction() throws Exception
 	{
-		this.EmailAccount = this.__EmailAccount == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), __EmailAccount);
-
 		// BEGIN USER CODE
 		if (this.EmailAccount == null) {
 			throw new EmailConnectorException(Error.EMPTY_EMAIL_ACCOUNT.getMessage());

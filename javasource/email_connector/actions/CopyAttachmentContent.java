@@ -17,25 +17,31 @@ import java.io.InputStream;
 
 public class CopyAttachmentContent extends CustomJavaAction<java.lang.Boolean>
 {
-	private IMendixObject __CopyFrom;
-	private system.proxies.FileDocument CopyFrom;
-	private IMendixObject __CopyTo;
-	private system.proxies.FileDocument CopyTo;
+	/** @deprecated use CopyFrom.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __CopyFrom;
+	private final system.proxies.FileDocument CopyFrom;
+	/** @deprecated use CopyTo.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __CopyTo;
+	private final system.proxies.FileDocument CopyTo;
 
-	public CopyAttachmentContent(IContext context, IMendixObject CopyFrom, IMendixObject CopyTo)
+	public CopyAttachmentContent(
+		IContext context,
+		IMendixObject _copyFrom,
+		IMendixObject _copyTo
+	)
 	{
 		super(context);
-		this.__CopyFrom = CopyFrom;
-		this.__CopyTo = CopyTo;
+		this.__CopyFrom = _copyFrom;
+		this.CopyFrom = _copyFrom == null ? null : system.proxies.FileDocument.initialize(getContext(), _copyFrom);
+		this.__CopyTo = _copyTo;
+		this.CopyTo = _copyTo == null ? null : system.proxies.FileDocument.initialize(getContext(), _copyTo);
 	}
 
 	@java.lang.Override
 	public java.lang.Boolean executeAction() throws Exception
 	{
-		this.CopyFrom = this.__CopyFrom == null ? null : system.proxies.FileDocument.initialize(getContext(), __CopyFrom);
-
-		this.CopyTo = this.__CopyTo == null ? null : system.proxies.FileDocument.initialize(getContext(), __CopyTo);
-
 		// BEGIN USER CODE
         IContext context = this.getContext();
 

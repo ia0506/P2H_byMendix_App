@@ -24,20 +24,24 @@ import static email_connector.implementation.Commons.getProtocol;
 
 public class GetFolderNames extends CustomJavaAction<java.util.List<IMendixObject>>
 {
-	private IMendixObject __MxEmailAccount;
-	private email_connector.proxies.EmailAccount MxEmailAccount;
+	/** @deprecated use MxEmailAccount.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __MxEmailAccount;
+	private final email_connector.proxies.EmailAccount MxEmailAccount;
 
-	public GetFolderNames(IContext context, IMendixObject MxEmailAccount)
+	public GetFolderNames(
+		IContext context,
+		IMendixObject _mxEmailAccount
+	)
 	{
 		super(context);
-		this.__MxEmailAccount = MxEmailAccount;
+		this.__MxEmailAccount = _mxEmailAccount;
+		this.MxEmailAccount = _mxEmailAccount == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), _mxEmailAccount);
 	}
 
 	@java.lang.Override
 	public java.util.List<IMendixObject> executeAction() throws Exception
 	{
-		this.MxEmailAccount = this.__MxEmailAccount == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), __MxEmailAccount);
-
 		// BEGIN USER CODE
         if (this.MxEmailAccount == null)
 			throw new EmailConnectorException(Error.EMPTY_EMAIL_ACCOUNT.getMessage());

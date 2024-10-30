@@ -22,20 +22,24 @@ import java.util.ArrayList;
 
 public class GetBaseDNList extends CustomJavaAction<java.util.List<IMendixObject>>
 {
-	private IMendixObject __LDAPConfiguration;
-	private email_connector.proxies.LDAPConfiguration LDAPConfiguration;
+	/** @deprecated use LDAPConfiguration.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __LDAPConfiguration;
+	private final email_connector.proxies.LDAPConfiguration LDAPConfiguration;
 
-	public GetBaseDNList(IContext context, IMendixObject LDAPConfiguration)
+	public GetBaseDNList(
+		IContext context,
+		IMendixObject _lDAPConfiguration
+	)
 	{
 		super(context);
-		this.__LDAPConfiguration = LDAPConfiguration;
+		this.__LDAPConfiguration = _lDAPConfiguration;
+		this.LDAPConfiguration = _lDAPConfiguration == null ? null : email_connector.proxies.LDAPConfiguration.initialize(getContext(), _lDAPConfiguration);
 	}
 
 	@java.lang.Override
 	public java.util.List<IMendixObject> executeAction() throws Exception
 	{
-		this.LDAPConfiguration = this.__LDAPConfiguration == null ? null : email_connector.proxies.LDAPConfiguration.initialize(getContext(), __LDAPConfiguration);
-
 		// BEGIN USER CODE
 		if (this.LDAPConfiguration == null)
 			throw new EmailConnectorException(Error.EMPTY_LDAP_CONFIG.getMessage());

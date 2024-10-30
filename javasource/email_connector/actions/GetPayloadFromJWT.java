@@ -15,12 +15,15 @@ import java.util.Base64;
 
 public class GetPayloadFromJWT extends CustomJavaAction<java.lang.String>
 {
-	private java.lang.String idToken;
+	private final java.lang.String idToken;
 
-	public GetPayloadFromJWT(IContext context, java.lang.String idToken)
+	public GetPayloadFromJWT(
+		IContext context,
+		java.lang.String _idToken
+	)
 	{
 		super(context);
-		this.idToken = idToken;
+		this.idToken = _idToken;
 	}
 
 	@java.lang.Override

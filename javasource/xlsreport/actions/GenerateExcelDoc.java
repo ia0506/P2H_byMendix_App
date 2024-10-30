@@ -29,27 +29,34 @@ import com.mendix.webui.CustomJavaAction;
 
 public class GenerateExcelDoc extends CustomJavaAction<IMendixObject>
 {
-	private IMendixObject __TemplateObject;
-	private xlsreport.proxies.MxTemplate TemplateObject;
-	private IMendixObject __OutputDocument;
-	private system.proxies.FileDocument OutputDocument;
-	private IMendixObject InputObject;
+	/** @deprecated use TemplateObject.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __TemplateObject;
+	private final xlsreport.proxies.MxTemplate TemplateObject;
+	/** @deprecated use OutputDocument.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __OutputDocument;
+	private final system.proxies.FileDocument OutputDocument;
+	private final IMendixObject InputObject;
 
-	public GenerateExcelDoc(IContext context, IMendixObject TemplateObject, IMendixObject OutputDocument, IMendixObject InputObject)
+	public GenerateExcelDoc(
+		IContext context,
+		IMendixObject _templateObject,
+		IMendixObject _outputDocument,
+		IMendixObject _inputObject
+	)
 	{
 		super(context);
-		this.__TemplateObject = TemplateObject;
-		this.__OutputDocument = OutputDocument;
-		this.InputObject = InputObject;
+		this.__TemplateObject = _templateObject;
+		this.TemplateObject = _templateObject == null ? null : xlsreport.proxies.MxTemplate.initialize(getContext(), _templateObject);
+		this.__OutputDocument = _outputDocument;
+		this.OutputDocument = _outputDocument == null ? null : system.proxies.FileDocument.initialize(getContext(), _outputDocument);
+		this.InputObject = _inputObject;
 	}
 
 	@java.lang.Override
 	public IMendixObject executeAction() throws Exception
 	{
-		this.TemplateObject = this.__TemplateObject == null ? null : xlsreport.proxies.MxTemplate.initialize(getContext(), __TemplateObject);
-
-		this.OutputDocument = this.__OutputDocument == null ? null : system.proxies.FileDocument.initialize(getContext(), __OutputDocument);
-
 		// BEGIN USER CODE
 		// Check first if the input is correct as configured
 		if(TemplateObject == null)

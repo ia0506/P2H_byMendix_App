@@ -23,24 +23,28 @@ import static java.util.stream.Collectors.counting;
 
 public class CalculateIncomingAccountMetrics extends CustomJavaAction<java.lang.Void>
 {
-	private java.util.List<IMendixObject> __EmailAccountList;
-	private java.util.List<email_connector.proxies.EmailAccount> EmailAccountList;
+	/** @deprecated use com.mendix.utils.ListUtils.map(EmailAccountList, com.mendix.systemwideinterfaces.core.IEntityProxy::getMendixObject) instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final java.util.List<IMendixObject> __EmailAccountList;
+	private final java.util.List<email_connector.proxies.EmailAccount> EmailAccountList;
 
-	public CalculateIncomingAccountMetrics(IContext context, java.util.List<IMendixObject> EmailAccountList)
+	public CalculateIncomingAccountMetrics(
+		IContext context,
+		java.util.List<IMendixObject> _emailAccountList
+	)
 	{
 		super(context);
-		this.__EmailAccountList = EmailAccountList;
+		this.__EmailAccountList = _emailAccountList;
+		this.EmailAccountList = java.util.Optional.ofNullable(_emailAccountList)
+			.orElse(java.util.Collections.emptyList())
+			.stream()
+			.map(emailAccountListElement -> email_connector.proxies.EmailAccount.initialize(getContext(), emailAccountListElement))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	@java.lang.Override
 	public java.lang.Void executeAction() throws Exception
 	{
-		this.EmailAccountList = java.util.Optional.ofNullable(this.__EmailAccountList)
-			.orElse(java.util.Collections.emptyList())
-			.stream()
-			.map(__EmailAccountListElement -> email_connector.proxies.EmailAccount.initialize(getContext(), __EmailAccountListElement))
-			.collect(java.util.stream.Collectors.toList());
-
 		// BEGIN USER CODE
 		for (var protocol : ENUM_IncomingProtocol.values())
 		{

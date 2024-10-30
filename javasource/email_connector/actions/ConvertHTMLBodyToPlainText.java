@@ -23,12 +23,15 @@ import java.io.StringReader;
  */
 public class ConvertHTMLBodyToPlainText extends CustomJavaAction<java.lang.String>
 {
-	private java.lang.String HTMLBody;
+	private final java.lang.String HTMLBody;
 
-	public ConvertHTMLBodyToPlainText(IContext context, java.lang.String HTMLBody)
+	public ConvertHTMLBodyToPlainText(
+		IContext context,
+		java.lang.String _hTMLBody
+	)
 	{
 		super(context);
-		this.HTMLBody = HTMLBody;
+		this.HTMLBody = _hTMLBody;
 	}
 
 	@java.lang.Override

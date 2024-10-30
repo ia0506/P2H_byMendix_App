@@ -22,20 +22,24 @@ import static email_connector.implementation.Commons.getProtocol;
 
 public class UnsubscribeFromIncomingEmail extends CustomJavaAction<java.lang.Void>
 {
-	private IMendixObject __account;
-	private email_connector.proxies.EmailAccount account;
+	/** @deprecated use account.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __account;
+	private final email_connector.proxies.EmailAccount account;
 
-	public UnsubscribeFromIncomingEmail(IContext context, IMendixObject account)
+	public UnsubscribeFromIncomingEmail(
+		IContext context,
+		IMendixObject _account
+	)
 	{
 		super(context);
-		this.__account = account;
+		this.__account = _account;
+		this.account = _account == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), _account);
 	}
 
 	@java.lang.Override
 	public java.lang.Void executeAction() throws Exception
 	{
-		this.account = this.__account == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), __account);
-
 		// BEGIN USER CODE
 		if (this.account == null)
 			throw new EmailConnectorException(Error.EMPTY_EMAIL_ACCOUNT.getMessage());

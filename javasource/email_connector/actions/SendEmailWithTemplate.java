@@ -25,29 +25,37 @@ import java.util.Map;
 
 public class SendEmailWithTemplate extends CustomJavaAction<java.lang.Void>
 {
-	private IMendixObject DataObject;
-	private IMendixObject __EmailAccount;
-	private email_connector.proxies.EmailAccount EmailAccount;
-	private IMendixObject __EmailTemplate;
-	private email_connector.proxies.EmailTemplate EmailTemplate;
-	private java.lang.Boolean Queued;
+	private final IMendixObject DataObject;
+	/** @deprecated use EmailAccount.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __EmailAccount;
+	private final email_connector.proxies.EmailAccount EmailAccount;
+	/** @deprecated use EmailTemplate.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __EmailTemplate;
+	private final email_connector.proxies.EmailTemplate EmailTemplate;
+	private final java.lang.Boolean Queued;
 
-	public SendEmailWithTemplate(IContext context, IMendixObject DataObject, IMendixObject EmailAccount, IMendixObject EmailTemplate, java.lang.Boolean Queued)
+	public SendEmailWithTemplate(
+		IContext context,
+		IMendixObject _dataObject,
+		IMendixObject _emailAccount,
+		IMendixObject _emailTemplate,
+		java.lang.Boolean _queued
+	)
 	{
 		super(context);
-		this.DataObject = DataObject;
-		this.__EmailAccount = EmailAccount;
-		this.__EmailTemplate = EmailTemplate;
-		this.Queued = Queued;
+		this.DataObject = _dataObject;
+		this.__EmailAccount = _emailAccount;
+		this.EmailAccount = _emailAccount == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), _emailAccount);
+		this.__EmailTemplate = _emailTemplate;
+		this.EmailTemplate = _emailTemplate == null ? null : email_connector.proxies.EmailTemplate.initialize(getContext(), _emailTemplate);
+		this.Queued = _queued;
 	}
 
 	@java.lang.Override
 	public java.lang.Void executeAction() throws Exception
 	{
-		this.EmailAccount = this.__EmailAccount == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), __EmailAccount);
-
-		this.EmailTemplate = this.__EmailTemplate == null ? null : email_connector.proxies.EmailTemplate.initialize(getContext(), __EmailTemplate);
-
 		// BEGIN USER CODE
 		if (this.EmailAccount == null)
 			throw new EmailConnectorException(Error.EMPTY_EMAIL_ACCOUNT.getMessage());

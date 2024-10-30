@@ -17,20 +17,24 @@ import java.util.stream.Collectors;
 
 public class JA_ReferenceObjects extends CustomJavaAction<java.lang.String>
 {
-	private IMendixObject __objectReference;
-	private mxmodelreflection.proxies.MxObjectReference objectReference;
+	/** @deprecated use objectReference.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __objectReference;
+	private final mxmodelreflection.proxies.MxObjectReference objectReference;
 
-	public JA_ReferenceObjects(IContext context, IMendixObject objectReference)
+	public JA_ReferenceObjects(
+		IContext context,
+		IMendixObject _objectReference
+	)
 	{
 		super(context);
-		this.__objectReference = objectReference;
+		this.__objectReference = _objectReference;
+		this.objectReference = _objectReference == null ? null : mxmodelreflection.proxies.MxObjectReference.initialize(getContext(), _objectReference);
 	}
 
 	@java.lang.Override
 	public java.lang.String executeAction() throws Exception
 	{
-		this.objectReference = this.__objectReference == null ? null : mxmodelreflection.proxies.MxObjectReference.initialize(getContext(), __objectReference);
-
 		// BEGIN USER CODE
 		if (objectReference == null) {
 			return null;

@@ -23,24 +23,30 @@ import static email_connector.implementation.Commons.getProtocol;
 
 public class SubscribeToIncomingEmail extends CustomJavaAction<java.lang.Void>
 {
-	private IMendixObject __account;
-	private email_connector.proxies.EmailAccount account;
-	private java.lang.String onNewEmailReceivedMicroflow;
-	private java.lang.String onSubscriptionStateChangedMicroflow;
+	/** @deprecated use account.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __account;
+	private final email_connector.proxies.EmailAccount account;
+	private final java.lang.String onNewEmailReceivedMicroflow;
+	private final java.lang.String onSubscriptionStateChangedMicroflow;
 
-	public SubscribeToIncomingEmail(IContext context, IMendixObject account, java.lang.String onNewEmailReceivedMicroflow, java.lang.String onSubscriptionStateChangedMicroflow)
+	public SubscribeToIncomingEmail(
+		IContext context,
+		IMendixObject _account,
+		java.lang.String _onNewEmailReceivedMicroflow,
+		java.lang.String _onSubscriptionStateChangedMicroflow
+	)
 	{
 		super(context);
-		this.__account = account;
-		this.onNewEmailReceivedMicroflow = onNewEmailReceivedMicroflow;
-		this.onSubscriptionStateChangedMicroflow = onSubscriptionStateChangedMicroflow;
+		this.__account = _account;
+		this.account = _account == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), _account);
+		this.onNewEmailReceivedMicroflow = _onNewEmailReceivedMicroflow;
+		this.onSubscriptionStateChangedMicroflow = _onSubscriptionStateChangedMicroflow;
 	}
 
 	@java.lang.Override
 	public java.lang.Void executeAction() throws Exception
 	{
-		this.account = this.__account == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), __account);
-
 		// BEGIN USER CODE
 		if (this.account == null)
 			throw new EmailConnectorException(Error.EMPTY_EMAIL_ACCOUNT.getMessage());

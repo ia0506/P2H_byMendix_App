@@ -24,24 +24,30 @@ import java.util.Map;
 
 public class CreateEmailFromTemplate extends CustomJavaAction<IMendixObject>
 {
-	private IMendixObject DataObject;
-	private IMendixObject __EmailTemplate;
-	private email_connector.proxies.EmailTemplate EmailTemplate;
-	private java.lang.Boolean Queued;
+	private final IMendixObject DataObject;
+	/** @deprecated use EmailTemplate.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __EmailTemplate;
+	private final email_connector.proxies.EmailTemplate EmailTemplate;
+	private final java.lang.Boolean Queued;
 
-	public CreateEmailFromTemplate(IContext context, IMendixObject DataObject, IMendixObject EmailTemplate, java.lang.Boolean Queued)
+	public CreateEmailFromTemplate(
+		IContext context,
+		IMendixObject _dataObject,
+		IMendixObject _emailTemplate,
+		java.lang.Boolean _queued
+	)
 	{
 		super(context);
-		this.DataObject = DataObject;
-		this.__EmailTemplate = EmailTemplate;
-		this.Queued = Queued;
+		this.DataObject = _dataObject;
+		this.__EmailTemplate = _emailTemplate;
+		this.EmailTemplate = _emailTemplate == null ? null : email_connector.proxies.EmailTemplate.initialize(getContext(), _emailTemplate);
+		this.Queued = _queued;
 	}
 
 	@java.lang.Override
 	public IMendixObject executeAction() throws Exception
 	{
-		this.EmailTemplate = this.__EmailTemplate == null ? null : email_connector.proxies.EmailTemplate.initialize(getContext(), __EmailTemplate);
-
 		// BEGIN USER CODE
 		if (this.EmailTemplate == null)
 			throw new EmailConnectorException(Error.EMPTY_EMAIL_TEMPLATE.getMessage());

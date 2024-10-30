@@ -24,26 +24,33 @@ import static email_connector.implementation.Commons.getProtocol;
 
 public class RetrieveEmailMessages extends CustomJavaAction<java.lang.Void>
 {
-	private IMendixObject __emailAccount;
-	private email_connector.proxies.EmailAccount emailAccount;
-	private java.lang.String onEmailFetchMicroflow;
-	private java.lang.String onFetchCompleteMicroflow;
-	private java.lang.String onFetchErrorMicroflow;
+	/** @deprecated use emailAccount.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __emailAccount;
+	private final email_connector.proxies.EmailAccount emailAccount;
+	private final java.lang.String onEmailFetchMicroflow;
+	private final java.lang.String onFetchCompleteMicroflow;
+	private final java.lang.String onFetchErrorMicroflow;
 
-	public RetrieveEmailMessages(IContext context, IMendixObject emailAccount, java.lang.String onEmailFetchMicroflow, java.lang.String onFetchCompleteMicroflow, java.lang.String onFetchErrorMicroflow)
+	public RetrieveEmailMessages(
+		IContext context,
+		IMendixObject _emailAccount,
+		java.lang.String _onEmailFetchMicroflow,
+		java.lang.String _onFetchCompleteMicroflow,
+		java.lang.String _onFetchErrorMicroflow
+	)
 	{
 		super(context);
-		this.__emailAccount = emailAccount;
-		this.onEmailFetchMicroflow = onEmailFetchMicroflow;
-		this.onFetchCompleteMicroflow = onFetchCompleteMicroflow;
-		this.onFetchErrorMicroflow = onFetchErrorMicroflow;
+		this.__emailAccount = _emailAccount;
+		this.emailAccount = _emailAccount == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), _emailAccount);
+		this.onEmailFetchMicroflow = _onEmailFetchMicroflow;
+		this.onFetchCompleteMicroflow = _onFetchCompleteMicroflow;
+		this.onFetchErrorMicroflow = _onFetchErrorMicroflow;
 	}
 
 	@java.lang.Override
 	public java.lang.Void executeAction() throws Exception
 	{
-		this.emailAccount = this.__emailAccount == null ? null : email_connector.proxies.EmailAccount.initialize(getContext(), __emailAccount);
-
 		// BEGIN USER CODE
 		if (this.emailAccount == null)
 			throw new EmailConnectorException(Error.EMPTY_EMAIL_ACCOUNT.getMessage());

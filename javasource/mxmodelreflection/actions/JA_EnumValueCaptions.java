@@ -17,20 +17,24 @@ import java.util.stream.Collectors;
 
 public class JA_EnumValueCaptions extends CustomJavaAction<java.lang.String>
 {
-	private IMendixObject __objectEnumValue;
-	private mxmodelreflection.proxies.MxObjectEnumValue objectEnumValue;
+	/** @deprecated use objectEnumValue.getMendixObject() instead. */
+	@java.lang.Deprecated(forRemoval = true)
+	private final IMendixObject __objectEnumValue;
+	private final mxmodelreflection.proxies.MxObjectEnumValue objectEnumValue;
 
-	public JA_EnumValueCaptions(IContext context, IMendixObject objectEnumValue)
+	public JA_EnumValueCaptions(
+		IContext context,
+		IMendixObject _objectEnumValue
+	)
 	{
 		super(context);
-		this.__objectEnumValue = objectEnumValue;
+		this.__objectEnumValue = _objectEnumValue;
+		this.objectEnumValue = _objectEnumValue == null ? null : mxmodelreflection.proxies.MxObjectEnumValue.initialize(getContext(), _objectEnumValue);
 	}
 
 	@java.lang.Override
 	public java.lang.String executeAction() throws Exception
 	{
-		this.objectEnumValue = this.__objectEnumValue == null ? null : mxmodelreflection.proxies.MxObjectEnumValue.initialize(getContext(), __objectEnumValue);
-
 		// BEGIN USER CODE
 		if (objectEnumValue == null) {
 			return null;

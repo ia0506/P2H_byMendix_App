@@ -19,12 +19,15 @@ import email_connector.implementation.MxMailMapper;
 
 public class GetAutoConfig extends CustomJavaAction<IMendixObject>
 {
-	private java.lang.String EmailID;
+	private final java.lang.String EmailID;
 
-	public GetAutoConfig(IContext context, java.lang.String EmailID)
+	public GetAutoConfig(
+		IContext context,
+		java.lang.String _emailID
+	)
 	{
 		super(context);
-		this.EmailID = EmailID;
+		this.EmailID = _emailID;
 	}
 
 	@java.lang.Override
